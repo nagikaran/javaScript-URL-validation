@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Website URL Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .form-container label {
+            font-size: 18px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .form-container input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .form-container #validateWebsite {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: none;
+        }
+
+        .form-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .form-container button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <label for="websiteInput">Enter Website URL:</label>
+        <input type="text" id="websiteInput" oninput="validatingWebsiteName(this)"
+            placeholder="E.g., https://www.example.com">
+        <p id="validateWebsite">Invalid Website URL</p>
+        <button id="submitBtnID" disabled>Submit</button>
+    </div>
+
+
+    <script>
+
+        function validatingWebsiteName(obj1) {
+            var valuOfTheVariable = obj1.value.trim();
+            var urlRegex = /^(?:(?:https?|ftp):\/\/)?(?:www\.)?([a-z0-9.-]+\.[a-z]{2,})(?:\/[^\s]*)?(?:\?[^\s]*)?(?:#[^\s]*)?$/i;
+            var wwwUrlRegex = /^(?:(?:https?|ftp):\/\/)?www\.[a-z0-9.-]+\.[a-z]{2,}(?:\/[^\s]*)?(?:\?[^\s]*)?(?:#[^\s]*)?$/i;
+            var temp = 0;
+            if (valuOfTheVariable === "") {
+                document.getElementById("validateWebsite").style.display = "none";
+                document.getElementById("submitBtnID").disabled = false;
+            } else if (valuOfTheVariable.match(urlRegex) || valuOfTheVariable.match(wwwUrlRegex)) {
+                // Additional check for "www" URLs: Ensure there are at least two dots in the URL
+                var dotCount = valuOfTheVariable.split('.').length - 1;
+                if (valuOfTheVariable.startsWith("www.") && dotCount < 2) {
+                    document.getElementById("validateWebsite").style.display = "block";
+                    document.getElementById("submitBtnID").disabled = true;
+                    temp = 1;
+                } else if (valuOfTheVariable.includes("http://") && valuOfTheVariable.includes("www.") && dotCount < 2) {
+                    document.getElementById("validateWebsite").style.display = "block";
+                    document.getElementById("submitBtnID").disabled = true;
+                    temp = 1;
+                } else if (!valuOfTheVariable.startsWith("www.")) {
+                    document.getElementById("validateWebsite").style.display = "none";
+                    document.getElementById("submitBtnID").disabled = false;
+                    temp = 1;
+                }
+            } else {
+                document.getElementById("validateWebsite").style.display = "block";
+                document.getElementById("submitBtnID").disabled = true;
+                temp = 1;
+            }
+            if (temp == 0) {
+                document.getElementById("validateWebsite").style.display = "none";
+                document.getElementById("submitBtnID").disabled = false;
+            }
+        }
+    </script>
+</body>
+
+</html>
