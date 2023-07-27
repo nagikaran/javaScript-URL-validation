@@ -87,7 +87,7 @@
                     document.getElementById("validateWebsite").style.display = "block";
                     document.getElementById("submitBtnID").disabled = true;
                     temp = 1;
-                } else if (valuOfTheVariable.includes("http://") && valuOfTheVariable.includes("www.") && dotCount < 2) {
+                } else if ((valuOfTheVariable.includes("http://") || valuOfTheVariable.includes("https://")) && valuOfTheVariable.includes("www.") && dotCount < 2) {
                     document.getElementById("validateWebsite").style.display = "block";
                     document.getElementById("submitBtnID").disabled = true;
                     temp = 1;
